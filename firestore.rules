@@ -1,0 +1,154 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    // Collection: users
+    // Document ID: userId (matches auth.uid)
+    // Fields:
+    //   - name: string (required)
+    //   - email: string (required)
+    //   - createdAt: string (required)
+    //   - subscriptionStatus: string (required, 'active' | 'inactive' | 'canceled')
+    //   - stripeCustomerId: string (optional)
+    //   - stripeSubscriptionId: string (optional)
+    //   - expiresAt: string (optional)
+    //   - role: string (required, 'user' | 'admin')
+    //   - favoritePlatforms: list of strings (optional)
+    //
+    // Collection: platforms
+    // Document ID: auto-generated
+    // Fields:
+    //   - name: string (required)
+    //   - description: string (required)
+    //   - rewardType: string (required)
+    //   - minWithdraw: string (required)
+    //   - link: string (required)
+    //   - logo: string (required)
+    //   - difficulty: string (required, 'easy' | 'medium' | 'hard')
+    //
+    // Collection: tutorials
+    // Document ID: auto-generated
+    // Fields:
+    //   - title: string (required)
+    //   - content: string (required)
+    //   - order: number (required)
+    //
+    // Collection: strategies
+    // Document ID: auto-generated
+    // Fields:
+    //   - title: string (required)
+    //   - content: string (required)
+    //   - order: number (required)
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin') ||
+        (request.auth.token.email == "thael92@gmail.com" && request.auth.token.email_verified == true)
+      );
+    }
+
+    function isSubscribed() {
+      return isAuthenticated() && (
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.subscriptionStatus == 'active') ||
+        isAdmin()
+      );
+    }
+
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+    function isValidUser(data) {
+      return hasRequiredFields(['name', 'email', 'createdAt', 'subscriptionStatus', 'role']) &&
+             data.name is string && data.name.size() > 0 && data.name.size() < 100 &&
+             isValidEmail(data.email) &&
+             data.createdAt is string &&
+             data.subscriptionStatus in ['active', 'inactive', 'canceled'] &&
+             data.role in ['user', 'admin'] &&
+             (!('favoritePlatforms' in data) || (data.favoritePlatforms is list && data.favoritePlatforms.size() <= 100));
+    }
+
+    function isValidPlatform(data) {
+      return hasRequiredFields(['name', 'description', 'rewardType', 'minWithdraw', 'link', 'logo', 'difficulty']) &&
+             data.name is string && data.name.size() > 0 && data.name.size() < 100 &&
+             data.description is string && data.description.size() > 0 && data.description.size() < 1000 &&
+             data.rewardType is string && data.rewardType.size() > 0 && data.rewardType.size() < 100 &&
+             data.minWithdraw is string && data.minWithdraw.size() > 0 && data.minWithdraw.size() < 50 &&
+             data.link is string && data.link.size() > 0 && data.link.size() < 500 &&
+             data.logo is string && data.logo.size() > 0 && data.logo.size() < 500 &&
+             data.difficulty in ['easy', 'medium', 'hard'];
+    }
+
+    function isValidContent(data) {
+      return hasRequiredFields(['title', 'content', 'order']) &&
+             data.title is string && data.title.size() > 0 && data.title.size() < 200 &&
+             data.content is string && data.content.size() > 0 && data.content.size() < 50000 &&
+             data.order is number;
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      
+      // Allow users to create their own profile, but force role='user' and subscriptionStatus='inactive'
+      allow create: if isOwner(userId) && 
+                       isValidUser(request.resource.data) && 
+                       request.resource.data.role == 'user' &&
+                       request.resource.data.subscriptionStatus == 'inactive';
+                       
+      // Allow users to update their own profile (name only), or admins to update anything
+      allow update: if (isOwner(userId) && 
+                        isValidUser(request.resource.data) &&
+                        request.resource.data.role == resource.data.role &&
+                        request.resource.data.subscriptionStatus == resource.data.subscriptionStatus &&
+                        request.resource.data.email == resource.data.email &&
+                        request.resource.data.createdAt == resource.data.createdAt) || 
+                       (isAdmin() && isValidUser(request.resource.data));
+                       
+      allow delete: if isAdmin();
+    }
+
+    match /platforms/{platformId} {
+      // Any subscribed user can read platforms
+      allow read: if isSubscribed();
+      allow create, update, delete: if isAdmin() && (request.method == 'delete' || isValidPlatform(request.resource.data));
+    }
+
+    match /tutorials/{tutorialId} {
+      // Any subscribed user can read tutorials
+      allow read: if isSubscribed();
+      allow create, update, delete: if isAdmin() && (request.method == 'delete' || isValidContent(request.resource.data));
+    }
+
+    match /strategies/{strategyId} {
+      // Any subscribed user can read strategies
+      allow read: if isSubscribed();
+      allow create, update, delete: if isAdmin() && (request.method == 'delete' || isValidContent(request.resource.data));
+    }
+  }
+}

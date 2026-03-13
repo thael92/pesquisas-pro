@@ -1,0 +1,79 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Information about a user, including subscription status.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "subscriptionStatus": { "type": "string", "enum": ["active", "inactive", "canceled"] },
+        "stripeCustomerId": { "type": "string" },
+        "stripeSubscriptionId": { "type": "string" },
+        "expiresAt": { "type": "string", "format": "date-time" },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "favoritePlatforms": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["name", "email", "createdAt", "subscriptionStatus", "role"]
+    },
+    "Platform": {
+      "title": "Survey Platform",
+      "description": "Details about a survey platform.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "rewardType": { "type": "string" },
+        "minWithdraw": { "type": "string" },
+        "link": { "type": "string" },
+        "logo": { "type": "string" },
+        "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"] }
+      },
+      "required": ["name", "description", "rewardType", "minWithdraw", "link", "logo", "difficulty"]
+    },
+    "Tutorial": {
+      "title": "Tutorial",
+      "description": "Educational content for users.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["title", "content", "order"]
+    },
+    "Strategy": {
+      "title": "Strategy",
+      "description": "Premium strategy content for users.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["title", "content", "order"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profiles."
+    },
+    "/platforms/{platformId}": {
+      "schema": { "$ref": "#/entities/Platform" },
+      "description": "List of survey platforms."
+    },
+    "/tutorials/{tutorialId}": {
+      "schema": { "$ref": "#/entities/Tutorial" },
+      "description": "List of tutorials."
+    },
+    "/strategies/{strategyId}": {
+      "schema": { "$ref": "#/entities/Strategy" },
+      "description": "List of strategies."
+    }
+  }
+}
