@@ -28,17 +28,14 @@ export function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500/30 overflow-hidden">
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500/30">
       {/* Header */}
       <header className="container mx-auto px-6 py-6 flex justify-between items-center relative z-20">
-        <div className="text-2xl font-bold text-indigo-500 tracking-tight flex items-center gap-2">
-          <Sparkles className="w-6 h-6" /> Pesquisador PRO
-        </div>
+        <Link to="/" className="text-2xl font-extrabold text-white tracking-tighter flex items-center gap-2">
+          <img src="/img/icone.png" alt="Ícone" className="w-8 h-8 object-contain" /> Pesquisador Pro
+        </Link>
         <nav className="space-x-4 flex items-center">
-          <Link to="/login" className="text-slate-300 hover:text-white transition-colors font-medium">Entrar</Link>
-          <Link to="/register" className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-medium transition-all shadow-[0_0_15px_rgba(79,70,229,0.4)] hover:shadow-[0_0_25px_rgba(79,70,229,0.6)]">
-            Assinar Acesso
-          </Link>
+          {/* Acesso via link direto ou após pagamento Cakto */}
         </nav>
       </header>
 
@@ -67,9 +64,9 @@ export function LandingPage() {
                 Descubra plataformas reais que pagam em dólar ou reais para responder pesquisas. Acesso completo a tutoriais, links diretos e estratégias para maximizar seus ganhos.
               </p>
               <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
-                <Link to="/register" className="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-semibold text-lg transition-all shadow-[0_0_20px_rgba(79,70,229,0.4)] hover:shadow-[0_0_30px_rgba(79,70,229,0.6)] flex items-center justify-center gap-2 group">
-                  Começar agora <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                <a href="#" className="px-8 py-4 bg-green-500 hover:bg-green-400 text-slate-950 rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(34,197,94,0.4)] hover:shadow-[0_0_30px_rgba(34,197,94,0.6)] flex items-center justify-center gap-2 group">
+                  Acessar Agora <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
                 <a href="#como-funciona" className="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-full font-semibold text-lg transition-all border border-slate-700 flex items-center justify-center gap-2">
                   <Play className="w-5 h-5" /> Saiba mais
                 </a>
@@ -77,7 +74,7 @@ export function LandingPage() {
             </motion.div>
 
             {/* Right Content - Mascot & Floating Elements */}
-            <div className="hidden lg:block relative h-[500px]">
+            <div className="relative h-[300px] md:h-[500px] mt-12 lg:mt-0">
               <motion.div
                 animate={{ y: [-20, 20, -20] }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -87,9 +84,9 @@ export function LandingPage() {
                   {/* Glowing backdrop for mascot */}
                   <div className="absolute inset-0 bg-indigo-500/30 blur-3xl rounded-full scale-150" />
                   <img 
-                    src="https://api.dicebear.com/7.x/bottts/svg?seed=PesquisadorPRO&backgroundColor=transparent" 
-                    alt="Mascote Pesquisador PRO" 
-                    className="w-80 h-80 relative z-10 drop-shadow-[0_0_40px_rgba(99,102,241,0.5)]"
+                    src="/img/icone.png" 
+                    alt="Logo Pesquisador PRO" 
+                    className="w-48 h-48 md:w-80 md:h-auto relative z-10 drop-shadow-[0_0_40px_rgba(99,102,241,0.5)]"
                   />
                 </div>
               </motion.div>
@@ -98,7 +95,7 @@ export function LandingPage() {
               <motion.div 
                 animate={{ y: [-10, 10, -10], x: [-5, 5, -5] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="absolute top-20 left-0 bg-slate-800/90 backdrop-blur-sm p-4 rounded-2xl border border-slate-700 shadow-2xl z-20 flex items-center gap-4"
+                className="absolute top-0 md:top-20 left-4 md:left-0 bg-slate-800/90 backdrop-blur-sm p-3 md:p-4 rounded-2xl border border-slate-700 shadow-2xl z-20 flex items-center gap-3 md:gap-4"
               >
                 <div className="bg-green-500/20 p-3 rounded-full text-green-400">
                   <DollarSign className="w-6 h-6" />
@@ -113,7 +110,7 @@ export function LandingPage() {
               <motion.div 
                 animate={{ y: [10, -10, 10], x: [5, -5, 5] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-                className="absolute bottom-20 right-0 bg-slate-800/90 backdrop-blur-sm p-4 rounded-2xl border border-slate-700 shadow-2xl z-20 flex items-center gap-4"
+                className="absolute bottom-4 md:bottom-20 right-4 md:right-0 bg-slate-800/90 backdrop-blur-sm p-3 md:p-4 rounded-2xl border border-slate-700 shadow-2xl z-20 flex items-center gap-3 md:gap-4"
               >
                 <div className="bg-indigo-500/20 p-3 rounded-full text-indigo-400">
                   <Gift className="w-6 h-6" />
@@ -154,7 +151,7 @@ export function LandingPage() {
           <div className="grid md:grid-cols-4 gap-8">
             {[
               { step: '1', title: 'Crie sua conta', desc: 'Faça seu cadastro rápido na nossa plataforma.' },
-              { step: '2', title: 'Assine o acesso', desc: 'Garanta seu acesso anual ao conteúdo premium.' },
+              { step: '2', title: 'Assine o acesso', desc: 'Garanta seu acesso anual via plataforma de pagamento.' },
               { step: '3', title: 'Acesse as plataformas', desc: 'Receba a lista curada com links diretos.' },
               { step: '4', title: 'Comece a responder', desc: 'Aplique as estratégias e ganhe dinheiro.' }
             ].map((item, i) => (
@@ -219,7 +216,10 @@ export function LandingPage() {
                 transition={{ delay: i * 0.1 }}
                 className="bg-slate-800/50 p-8 rounded-3xl border border-slate-700 hover:border-indigo-500/50 hover:bg-slate-800 transition-all group"
               >
-                <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-indigo-400 transition-colors">{p.name}</h3>
+                <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-indigo-400 transition-colors flex items-center">
+                  <span>{p.name.slice(0, 3)}</span>
+                  <span className="blur-md select-none">{p.name.slice(3)}</span>
+                </h3>
                 <div className="space-y-3 text-slate-400">
                   <p className="flex justify-between border-b border-slate-700/50 pb-2">
                     <strong className="text-slate-300">Recompensa:</strong> 
@@ -235,7 +235,7 @@ export function LandingPage() {
           </div>
           <div className="text-center mt-12">
             <p className="text-lg text-slate-400 italic flex items-center justify-center gap-2">
-              <Sparkles className="w-5 h-5 text-indigo-400" /> Acesso imediato a todas essas plataformas e seus guias passo a passo na área de membros.
+              <img src="/img/icone.png" alt="Ícone" className="w-6 h-6 object-contain" /> Acesso imediato a todas essas plataformas e seus guias passo a passo na área de membros.
             </p>
           </div>
         </div>
@@ -247,20 +247,40 @@ export function LandingPage() {
         <div className="container mx-auto px-6 max-w-3xl relative z-10">
           <h2 className="text-5xl md:text-6xl font-bold mb-8">Pronto para começar?</h2>
           <p className="text-2xl text-slate-400 mb-12">Junte-se a centenas de pessoas que já estão faturando uma renda extra no tempo livre.</p>
-          <Link to="/register" className="px-12 py-6 bg-green-500 hover:bg-green-400 text-slate-950 rounded-full font-bold text-2xl transition-all shadow-[0_0_30px_rgba(34,197,94,0.4)] hover:shadow-[0_0_50px_rgba(34,197,94,0.6)] inline-flex items-center gap-3 group">
-            Assinar Plano PRO <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-          </Link>
+          <a href="#" className="px-12 py-6 bg-green-500 hover:bg-green-400 text-slate-950 rounded-full font-bold text-2xl transition-all shadow-[0_0_30px_rgba(34,197,94,0.4)] hover:shadow-[0_0_50px_rgba(34,197,94,0.6)] inline-flex items-center gap-3 group">
+            Acessar Agora <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+          </a>
+          <div className="mt-8 p-6 bg-slate-800/50 rounded-2xl border border-slate-700 max-w-lg mx-auto">
+            <p className="text-slate-400">As inscrições são liberadas apenas após a confirmação do pagamento via Cakto.</p>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
       <footer className="border-t border-slate-800 py-12 text-center text-slate-500 bg-slate-950">
         <div className="flex items-center justify-center gap-2 mb-4">
-          <Sparkles className="w-5 h-5 text-indigo-500/50" />
-          <span className="font-bold text-slate-400">Pesquisador PRO</span>
+          <img src="/img/icone.png" alt="Ícone" className="w-6 h-6 object-contain opacity-70" />
+          <span className="font-bold text-white">Pesquisador Pro</span>
         </div>
         <p>© {new Date().getFullYear()} Pesquisador PRO. Todos os direitos reservados.</p>
       </footer>
+
+      {/* Floating CTA Button */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.5, duration: 0.5 }}
+        className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100]"
+      >
+        <a 
+          href="#" 
+          className="flex items-center gap-2 px-5 py-3 md:px-8 md:py-4 bg-green-500 hover:bg-green-400 text-slate-950 rounded-full font-bold shadow-[0_0_30px_rgba(34,197,94,0.5)] hover:shadow-[0_0_50px_rgba(34,197,94,0.8)] transition-all transform hover:-translate-y-2 active:scale-95 group border-2 border-green-300/20"
+        >
+          <DollarSign className="w-5 h-5 md:w-6 md:h-6" />
+          <span className="text-sm md:text-lg">Acessar Agora</span>
+          <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
+        </a>
+      </motion.div>
     </div>
   );
 }

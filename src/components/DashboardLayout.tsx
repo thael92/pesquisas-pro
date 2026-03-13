@@ -27,8 +27,9 @@ export function DashboardLayout() {
     <div className="flex h-screen bg-slate-900 text-slate-100 font-sans">
       {/* Sidebar Desktop */}
       <aside className="hidden md:flex flex-col w-64 bg-slate-800 border-r border-slate-700">
-        <div className="p-6 flex items-center justify-center border-b border-slate-700">
-          <h1 className="text-xl font-bold text-indigo-500">Pesquisador PRO</h1>
+        <div className="p-6 flex items-center gap-3 border-b border-slate-700">
+          <img src="/img/icone.png" alt="Ícone" className="w-8 h-8 object-contain" />
+          <h1 className="text-xl font-bold text-white tracking-tight">Pesquisador Pro</h1>
         </div>
         
         <nav className="flex-1 p-4 space-y-2">
@@ -68,7 +69,10 @@ export function DashboardLayout() {
 
       {/* Mobile Header */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-slate-800 border-b border-slate-700 flex items-center justify-between px-4 z-50">
-        <h1 className="text-lg font-bold text-indigo-500">Pesquisador PRO</h1>
+        <div className="flex items-center gap-2">
+          <img src="/img/icone.png" alt="Ícone" className="w-6 h-6 object-contain" />
+          <h1 className="text-lg font-bold text-white tracking-tight">Pesquisador Pro</h1>
+        </div>
         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-slate-300">
           {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>

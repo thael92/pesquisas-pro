@@ -40,9 +40,9 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen flex bg-slate-950 font-sans selection:bg-indigo-500/30 overflow-hidden">
-      {/* Left Panel - Hidden on mobile */}
-      <div className="hidden lg:flex lg:w-1/2 relative bg-slate-900 border-r border-slate-800 items-center justify-center p-12">
+    <div className="min-h-screen flex flex-col lg:flex-row bg-slate-950 font-sans selection:bg-indigo-500/30 overflow-y-auto">
+      {/* Left/Top Panel - Now visible on mobile */}
+      <div className="w-full lg:w-1/2 relative bg-slate-900 border-b lg:border-r border-slate-800 flex items-center justify-center p-8 lg:p-12 overflow-hidden">
         {/* Background gradients & animated blobs */}
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-indigo-500/10 via-slate-900 to-green-500/10" />
         <motion.div 
@@ -57,8 +57,8 @@ export function Login() {
         />
         
         <div className="relative z-10 max-w-lg w-full flex flex-col items-center text-center">
-          <Link to="/" className="text-3xl font-bold text-indigo-500 tracking-tight mb-8 self-start flex items-center gap-2">
-            <Sparkles className="w-6 h-6" /> Pesquisador PRO
+          <Link to="/" className="hidden lg:flex text-3xl font-bold text-indigo-500 tracking-tight mb-8 self-start items-center gap-2">
+            <img src="/img/icone.png" alt="Ícone" className="w-8 h-8 object-contain" /> Pesquisador Pro
           </Link>
           
           {/* Mascot Animation */}
@@ -69,9 +69,9 @@ export function Login() {
           >
             <div className="absolute inset-0 bg-indigo-500/20 blur-3xl rounded-full" />
             <img 
-              src="https://api.dicebear.com/7.x/bottts/svg?seed=PesquisadorPRO&backgroundColor=transparent" 
-              alt="Mascote Pesquisador PRO" 
-              className="w-64 h-64 relative z-10 drop-shadow-[0_0_30px_rgba(99,102,241,0.4)]"
+              src="/img/icone.png" 
+              alt="Logo Pesquisador PRO" 
+              className="w-40 h-40 lg:w-64 lg:h-auto relative z-10 drop-shadow-[0_0_30px_rgba(99,102,241,0.4)]"
             />
             
             {/* Floating Elements around Mascot */}
@@ -91,10 +91,10 @@ export function Login() {
             </motion.div>
           </motion.div>
 
-          <h2 className="text-4xl font-bold text-white mb-6 leading-tight">
+          <h2 className="text-2xl lg:text-4xl font-bold text-white mb-4 lg:mb-6 leading-tight">
             Sua máquina de ganhos está pronta.
           </h2>
-          <p className="text-lg text-slate-400 mb-10">
+          <p className="text-base lg:text-lg text-slate-400 mb-0 lg:mb-10">
             Acesse suas plataformas, descubra novas estratégias e continue faturando em dólar e reais todos os dias.
           </p>
         </div>
@@ -122,8 +122,8 @@ export function Login() {
             className="max-w-md w-full relative z-10"
           >
             <div className="text-center lg:text-left mb-10">
-              <Link to="/" className="lg:hidden text-2xl font-bold text-indigo-500 tracking-tight mb-8 flex items-center justify-center gap-2">
-                <Sparkles className="w-5 h-5" /> Pesquisador PRO
+              <Link to="/" className="lg:hidden mb-8 flex items-center justify-center gap-2 text-2xl font-extrabold text-white tracking-tighter">
+                <img src="/img/icone.png" alt="Ícone" className="w-7 h-7 object-contain" /> Pesquisador Pro
               </Link>
               <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Entrar na conta</h1>
               <p className="text-slate-400 text-lg">Insira seus dados para acessar o painel.</p>
@@ -205,7 +205,7 @@ export function Login() {
 
             <div className="mt-10 text-center text-slate-400">
               Não tem uma conta?{' '}
-              <Link to="/register" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
+              <Link to="/register-v5821" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
                 Criar conta agora
               </Link>
             </div>

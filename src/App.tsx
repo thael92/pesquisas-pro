@@ -70,8 +70,8 @@ export default function App() {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/login-v5821" element={<Login />} />
+          <Route path="/register-v5821" element={<Register />} />
           
           {/* Mock Subscribe Route */}
           <Route path="/subscribe" element={
